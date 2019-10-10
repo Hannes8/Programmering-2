@@ -71,10 +71,11 @@ public class CalculatorLayout extends Application {
         for (int i = 0; i < numPad.size(); i++) {
 
             // var tredje iteration byter den rad o
-            if (i % 3 ==0) {
+            if (i % 5 ==0) {
                 row++;
                 columb = 1;
             }
+
 
             buttons.add(numPad.get(i),columb,row);
             columb ++;
@@ -87,7 +88,7 @@ public class CalculatorLayout extends Application {
 
     public void buttonCreator() {
 
-        char[] numPadChar = {'7', '8', '9','4','5','6','1','2','3','0','.','='};
+        char[] numPadChar = {'7', '8', '9','x','t','4','5','6','÷','t','1','2','3','-','t','.','0','=','+','t','(',')','C','D','t'};
         int count = 0;
 
         for (char t : numPadChar){
@@ -96,6 +97,7 @@ public class CalculatorLayout extends Application {
             System.out.println(temporaryChar);
             String temporaryString = String.valueOf(temporaryChar);
             Button temp = new Button(temporaryString);
+            temp.setStyle("-fx-font: 24 arial;");
             temp.setOnAction(event -> {System.out.println(temporaryString);});
             temp.setPrefWidth(100);
             temp.setPrefHeight(100);
