@@ -4,6 +4,9 @@ public class CalculatorMain {
 
     public static void main(String[] args) {
         CalculatorLayout layoutClass = new CalculatorLayout();
+        CalculatorCalculations test = new CalculatorCalculations();
+        CalculatorController controll = new CalculatorController();
+        controll.main(null);
 
 
 

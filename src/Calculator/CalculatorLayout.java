@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.shape.Rectangle;
 import javafx.event.ActionEvent;
+import java.util.Arrays;
 
 import java.awt.*;
 import javafx.scene.control.Button;
@@ -24,11 +25,14 @@ import java.util.ArrayList;
 
 
 public class CalculatorLayout extends Application {
+
     BorderPane calculatorLayout = new BorderPane();
 
-
+    HBox hbox = new HBox();
 
     ArrayList<Button> numPad = new ArrayList<Button>();
+
+
     public static void main(String[] args) {
         launch(args);
 
@@ -37,13 +41,19 @@ public class CalculatorLayout extends Application {
 
         @Override
         public void start (Stage primaryStage){
+
+            CalculatorOutput outputClass = new CalculatorOutput();
+
             buttonCreator();
 
             calculatorLayout.setPrefWidth(1000);
             calculatorLayout.setPrefHeight(800);
 
-            textInput(null);
+            // Ger hboxen sitt textfield från CalculatorOutput klassen
 
+
+            calculatorLayout.setTop(hbox);
+            hbox.getChildren().setAll(outputClass.textfieldOutput(""));
             calculatorLayout.setCenter(borderpaneCenter());
 
             Scene calculatorScene = new Scene(calculatorLayout);
@@ -56,18 +66,11 @@ public class CalculatorLayout extends Application {
 
 
     public void textInput(String numberInput) {
-        String temp = numberInput;
-        System.out.println(temp);
-        HBox hbox = new HBox();
-        TextField input = new TextField(temp);
-        input.setStyle(("-fx-font: 50 arial;"));
-        input.setPrefWidth(800.0);
-        input.setPrefHeight(200.0);
-        String hej = input.textProperty().get();
-        System.out.println(hej);
 
+        TextField input = new TextField();
+        input.setText(numberInput);
 
-        hbox.getChildren().addAll(input);
+        hbox.getChildren().setAll(input);
 
         calculatorLayout.setTop(hbox);
 
@@ -87,7 +90,7 @@ public class CalculatorLayout extends Application {
         buttons.setVgap(10);
         for (int i = 0; i < numPad.size(); i++) {
 
-            // var tredje iteration byter den rad o
+            // var femte iteration byter den rad och nollställer columben till sin orginalplats
             if (i % 5 ==0) {
                 row++;
                 columb = 1;
@@ -102,11 +105,15 @@ public class CalculatorLayout extends Application {
 
         return center;
     }
+    public void tempo(String hej){
+
+    }
 
     public void buttonCreator() {
         CalculatorOutput outputClass = new CalculatorOutput();
 
-        char[] numPadChar = {'7', '8', '9','x','t','4','5','6','÷','t','1','2','3','-','t','.','0','=','+','t','(',')','C','D','t'};
+
+        char[] numPadChar = {'7', '8', '9','x','⌫','4','5','6','÷','t','1','2','3','-','t','.','0','=','+','t','(',')','C','D','t'};
         int count = 0;
 
         for (char t : numPadChar){
@@ -118,10 +125,7 @@ public class CalculatorLayout extends Application {
             Button temp = new Button(temporaryString);
             temp.setStyle("-fx-font: 24 arial;");
 
-            // call output med siffran
-
-            // lägg till array med siffrorna 
-            temp.setOnAction(event -> { outputClass.textfieldOutput(temporaryString);});
+            temp.setOnAction(event -> { hbox.getChildren().setAll(outputClass.textfieldOutput(temporaryString)); });
             temp.setPrefWidth(100);
             temp.setPrefHeight(100);
             numPad.add(temp);
