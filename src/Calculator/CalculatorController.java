@@ -2,16 +2,17 @@ package Calculator;
 
 
 public class CalculatorController {
-    static CalculatorCalculations operators[] = new CalculatorCalculations[999];
+    static CalculatorInterfaceOperators operators[] = new CalculatorInterfaceOperators[999];
+
     public static void main(String[] args) {
         // gör en array av CalculatorCalculations vid namn operators
 
         // ger alla räknesätt ett index i form av sina tecken exempelvist addition blir +
         operators ['+'] = new CalculatorAddition();
         operators ['-'] = new CalculatorSubtraction();
-
-           System.out.println(operators['+'].calculate(4.5 , 8.6));
-           System.out.println(operators['-'].calculate(4.8 , 5.6));
+        operators ['÷'] = new CalculatorDevision();
+        operators ['x'] = new CalculatorMultiplication();
+        operators ['s'] = new CalculatorSquareRoot();
 
     }
 

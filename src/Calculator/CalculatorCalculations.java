@@ -6,12 +6,7 @@ import java.util.ArrayList;
 public class CalculatorCalculations {
     CalculatorController controllerClass = new CalculatorController();
 
-    public double calculate(double firstNumber, double secondNumber){
 
-        return 0.0;
-
-
-    }
 
     /**
      * Loopar igenom inputen från textfield och checkar varje tecken om det är ett nummer, om det inte är ett nummber så
@@ -19,34 +14,45 @@ public class CalculatorCalculations {
      * @return
      */
     public String result(String textfieldValue){
+        String resultString = "";
+        ArrayList<Double> terms = termFinder(textfieldValue);
         for (int i = 0; i < textfieldValue.length() -1; i++) {
           if(checkIfNumber(textfieldValue.charAt(i)) == false) {
               char operator = textfieldValue.charAt(i);
 
               // operator, first number, second number
-              double [] terms = termFinder(textfieldValue);
-
 
 
               System.out.println(operator);
               System.out.println("not a number");
-              double result = controllerClass.operatorController(operator, terms[0],terms[1]);
-              int test = (int)result;
-              String resultString = Integer.toString(test);
-              return resultString;
+              double result = controllerClass.operatorController(operator, terms.get(0),terms.get(1));
+              terms.remove(0);
+              terms.remove(1);
+              terms.add(0,result);
+              
+              System.out.println(terms);
 
+              int test = (int)result;
+              resultString = Integer.toString(test);
 
 
             }
 
 
         }
-        return "error";
+        return resultString;
+      //  return textfieldValue;
 
 
 
     }
-    public double[] termFinder(String input){
+
+    /**
+     * En motod som tar in en string och hittar termer av siffror samt alla tecken som inte är siffror
+     * @param input
+     * @return
+     */
+    public ArrayList<Double> termFinder(String input){
        String termAsString ="";
         ArrayList <Double> doubleArray = new ArrayList<>();
         for (int i = 0; i < input.length(); i++) {
@@ -63,11 +69,13 @@ public class CalculatorCalculations {
 
             }
 
+
         }
 
+        System.out.println(doubleArray);
 
-        double [] terms = {doubleArray.get(0),doubleArray.get(1)};
-        return terms;
+
+        return doubleArray;
     }
 
     public Boolean checkIfNumber(char input){
@@ -78,3 +86,5 @@ public class CalculatorCalculations {
     }
 
 }
+
+// dela up termerna och kör dem separat

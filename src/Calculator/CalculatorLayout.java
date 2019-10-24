@@ -113,7 +113,7 @@ public class CalculatorLayout extends Application {
         CalculatorOutput outputClass = new CalculatorOutput();
 
 
-        char[] numPadChar = {'7', '8', '9','x','⌫','4','5','6','÷','t','1','2','3','-','t','.','0','=','+','t','(',')','C','D','t'};
+        char[] numPadChar = {'7', '8', '9','x','⌫','4','5','6','÷','t','1','2','3','-','√','.','0','=','+','t','(',')','C','D','t'};
         int count = 0;
 
         for (char t : numPadChar){

@@ -1,6 +1,6 @@
 package Calculator;
 
-public class CalculatorAddition extends CalculatorCalculations{
+public class CalculatorAddition implements CalculatorInterfaceOperators {
 
     public double calculate(double firstNumber,double secondNumber){
 
