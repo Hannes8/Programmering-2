@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class CalculatorCalculations {
     CalculatorController controllerClass = new CalculatorController();
+    CalculatorSquareRoot squareRoot = new CalculatorSquareRoot();
 
 
 
@@ -14,25 +15,36 @@ public class CalculatorCalculations {
      * @return
      */
     public String result(String textfieldValue){
-        String resultString = "";
+        String resultString = textfieldValue;
         ArrayList<Double> terms = termFinder(textfieldValue);
         for (int i = 0; i < textfieldValue.length() -1; i++) {
+            System.out.println(terms);
+
           if(checkIfNumber(textfieldValue.charAt(i)) == false) {
+
+
               char operator = textfieldValue.charAt(i);
+              if(operator=='√'){
+                  double squareResult = squareRoot.calculate(0.0,terms.get(1));
+                  terms.remove(1);
+                  terms.add(0,squareResult);
+              }
+                else {
 
-              // operator, first number, second number
+                  double result = controllerClass.operatorController(operator, terms.get(0), terms.get(1));
 
 
-              System.out.println(operator);
-              System.out.println("not a number");
-              double result = controllerClass.operatorController(operator, terms.get(0),terms.get(1));
-              terms.remove(0);
-              terms.remove(1);
-              terms.add(0,result);
-              
+                  // Anropar räknesätts klassen med de första termerna och sedan tar bort de från arrayen och lägger in resultatet istället
+
+                  terms.remove(1);
+                  terms.remove(0);
+                  terms.add(0, result);
+
+              }
               System.out.println(terms);
 
-              int test = (int)result;
+                double testt = terms.get(0);
+              int test = (int)testt;
               resultString = Integer.toString(test);
 
 
@@ -41,10 +53,6 @@ public class CalculatorCalculations {
 
         }
         return resultString;
-      //  return textfieldValue;
-
-
-
     }
 
     /**
@@ -53,8 +61,11 @@ public class CalculatorCalculations {
      * @return
      */
     public ArrayList<Double> termFinder(String input){
+        int count=0;
        String termAsString ="";
         ArrayList <Double> doubleArray = new ArrayList<>();
+
+
         for (int i = 0; i < input.length(); i++) {
             if(checkIfNumber(input.charAt(i))==true){
             termAsString = termAsString + input.charAt(i);
@@ -73,7 +84,6 @@ public class CalculatorCalculations {
         }
 
         System.out.println(doubleArray);
-
 
         return doubleArray;
     }

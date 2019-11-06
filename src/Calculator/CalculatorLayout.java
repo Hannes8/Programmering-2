@@ -53,7 +53,7 @@ public class CalculatorLayout extends Application {
 
 
             calculatorLayout.setTop(hbox);
-            hbox.getChildren().setAll(outputClass.textfieldOutput(""));
+            hbox.getChildren().setAll(outputClass.textfieldOutput("1"));
             calculatorLayout.setCenter(borderpaneCenter());
 
             Scene calculatorScene = new Scene(calculatorLayout);
@@ -63,19 +63,6 @@ public class CalculatorLayout extends Application {
             primaryStage.show();
 
         }
-
-
-    public void textInput(String numberInput) {
-
-        TextField input = new TextField();
-        input.setText(numberInput);
-
-        hbox.getChildren().setAll(input);
-
-        calculatorLayout.setTop(hbox);
-
-
-    }
 
     /**
      * Skapar numpaden
@@ -96,7 +83,6 @@ public class CalculatorLayout extends Application {
                 columb = 1;
             }
 
-
             buttons.add(numPad.get(i),columb,row);
             columb ++;
         }
@@ -113,7 +99,7 @@ public class CalculatorLayout extends Application {
         CalculatorOutput outputClass = new CalculatorOutput();
 
 
-        char[] numPadChar = {'7', '8', '9','x','⌫','4','5','6','÷','t','1','2','3','-','√','.','0','=','+','t','(',')','C','D','t'};
+        char[] numPadChar = {'7', '8', '9','*','⌫','4','5','6','÷','%','1','2','3','-','√','.','0','=','+','t','(',')','C','D','t'};
         int count = 0;
 
         for (char t : numPadChar){
@@ -125,6 +111,7 @@ public class CalculatorLayout extends Application {
             Button temp = new Button(temporaryString);
             temp.setStyle("-fx-font: 24 arial;");
 
+            // Vid ett knapptryck så anropas texfieldOutput metoden för att avgöra vad som ska visas i hboxen
             temp.setOnAction(event -> { hbox.getChildren().setAll(outputClass.textfieldOutput(temporaryString)); });
             temp.setPrefWidth(100);
             temp.setPrefHeight(100);
