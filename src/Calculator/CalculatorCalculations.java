@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class CalculatorCalculations {
     CalculatorController controllerClass = new CalculatorController();
     CalculatorSquareRoot squareRoot = new CalculatorSquareRoot();
-
+    String modifiedString;
 
 
     /**
@@ -15,21 +15,36 @@ public class CalculatorCalculations {
      * @return
      */
     public String result(String textfieldValue){
+
         String resultString = textfieldValue;
         ArrayList<Double> terms = termFinder(textfieldValue);
+        // gör om inputen så att minus som tillhör termer inte visas
+        textfieldValue = makeInputValid(textfieldValue,0);
+
+
+        if (terms.size()==1)
+        terms.add(0.0);
+
         for (int i = 0; i < textfieldValue.length() -1; i++) {
             System.out.println(terms);
 
-          if(checkIfNumber(textfieldValue.charAt(i)) == false) {
+
+          if(Character.isDigit(textfieldValue.charAt(i)) == false) {
+
 
 
               char operator = textfieldValue.charAt(i);
+
+
               if(operator=='√'){
-                  double squareResult = squareRoot.calculate(0.0,terms.get(1));
-                  terms.remove(1);
+                  double squareResult = squareRoot.calculate(0.0,terms.get(0));
+                  System.out.println(terms.get(0)+" term 1");
+                  terms.remove(0);
                   terms.add(0,squareResult);
+                  System.out.println(squareResult+" SquareRootCheck");
               }
                 else {
+
 
                   double result = controllerClass.operatorController(operator, terms.get(0), terms.get(1));
 
@@ -43,10 +58,19 @@ public class CalculatorCalculations {
               }
               System.out.println(terms);
 
-                double testt = terms.get(0);
-              int test = (int)testt;
-              resultString = Integer.toString(test);
+                double resultAsDouble = terms.get(0);
 
+                // om det är ett heltal utan decimaler så blir result en int annars blir det en double
+                if(resultAsDouble%1==0){
+                    int test = (int)resultAsDouble;
+                    resultString = Integer.toString(test);
+
+                }else {
+                    resultString = Double.toString(resultAsDouble);
+                }
+
+
+              System.out.println(resultString+" ResultOutput");
 
             }
 
@@ -61,40 +85,61 @@ public class CalculatorCalculations {
      * @return
      */
     public ArrayList<Double> termFinder(String input){
-        int count=0;
        String termAsString ="";
         ArrayList <Double> doubleArray = new ArrayList<>();
-
+        String newInput = input;
+        String temporary="";
 
         for (int i = 0; i < input.length(); i++) {
-            if(checkIfNumber(input.charAt(i))==true){
-            termAsString = termAsString + input.charAt(i);
+            // om inputen är en siffra eller minustecken då termen är tom
+            if(Character.isDigit(input.charAt(i))==true || termAsString.length()==0 && input.charAt(i)=='-'|| input.charAt(i)=='.'){
+
+                termAsString = termAsString + input.charAt(i);
+
+                if(input.charAt(i)=='-' || input.charAt(i)=='.') {
+                    StringBuilder builder = new StringBuilder(newInput);
+                    builder.deleteCharAt(i);
+                    newInput = builder.toString();
+                    System.out.println(newInput + " modified");
+                }
+
+
             }
             else{
 
-                System.out.println(termAsString);
-                doubleArray.add(Double.parseDouble(termAsString));
+                if(termAsString.length()==0){
 
-                termAsString ="";
+                }
+                    else{
+
+
+                    System.out.println(termAsString);
+                    doubleArray.add(Double.parseDouble(termAsString));
+
+                    termAsString = "";
+                }
 
 
             }
 
 
         }
+        makeInputValid(newInput,1);
 
         System.out.println(doubleArray);
 
         return doubleArray;
     }
+    public String makeInputValid(String input,int identifier){
+        if (identifier==1){
+            modifiedString = input;
+        }
+        return modifiedString;
+    }
+    public ArrayList<Double> termOrder(ArrayList<Double> terms,String textfieldInput){
 
-    public Boolean checkIfNumber(char input){
-       if(Character.isDigit(input)==false)
-           return false;
 
-        return true;
+return null;
     }
 
 }
-
-// dela up termerna och kör dem separat

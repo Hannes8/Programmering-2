@@ -46,14 +46,16 @@ public class CalculatorLayout extends Application {
 
             buttonCreator();
 
-            calculatorLayout.setPrefWidth(1000);
+            calculatorLayout.setPrefWidth(600);
             calculatorLayout.setPrefHeight(800);
+
 
             // Ger hboxen sitt textfield från CalculatorOutput klassen
 
 
             calculatorLayout.setTop(hbox);
-            hbox.getChildren().setAll(outputClass.textfieldOutput("1"));
+            // gör första inputen till textfielden som C så att den är tom
+            hbox.getChildren().setAll(outputClass.textfieldOutput("C"));
             calculatorLayout.setCenter(borderpaneCenter());
 
             Scene calculatorScene = new Scene(calculatorLayout);
@@ -91,15 +93,15 @@ public class CalculatorLayout extends Application {
 
         return center;
     }
-    public void tempo(String hej){
 
-    }
-
+    /**
+     * Skapar knappar och tilldelar teckan somt vilken metod som ska anropas när knappen klickas
+     */
     public void buttonCreator() {
         CalculatorOutput outputClass = new CalculatorOutput();
 
 
-        char[] numPadChar = {'7', '8', '9','*','⌫','4','5','6','÷','%','1','2','3','-','√','.','0','=','+','t','(',')','C','D','t'};
+        char[] numPadChar = {'7', '8', '9','*','⌫','4','5','6','÷','%','1','2','3','-','√','.','0','=','+','π','(',')','C','D','t'};
         int count = 0;
 
         for (char t : numPadChar){
