@@ -1,44 +1,25 @@
 package Calculator;
-
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import javafx.scene.control.*;
-import javafx.scene.shape.Rectangle;
-import javafx.event.ActionEvent;
-import java.util.Arrays;
-
-import java.awt.*;
 import javafx.scene.control.Button;
-
-import java.awt.Label;
-import java.time.Clock;
 import java.util.ArrayList;
-
-
 
 public class CalculatorLayout extends Application {
 
-    BorderPane calculatorLayout = new BorderPane();
+    private BorderPane calculatorLayout = new BorderPane();
 
-    HBox hbox = new HBox();
+    private HBox hbox = new HBox();
 
-    ArrayList<Button> numPad = new ArrayList<Button>();
-
+    private ArrayList<Button> numPad = new ArrayList<Button>();
 
     public static void main(String[] args) {
         launch(args);
-
     }
-
-
         @Override
         public void start (Stage primaryStage){
 
@@ -46,13 +27,8 @@ public class CalculatorLayout extends Application {
 
             buttonCreator();
 
-            calculatorLayout.setPrefWidth(600);
-            calculatorLayout.setPrefHeight(800);
-
-
-            // Ger hboxen sitt textfield från CalculatorOutput klassen
-
-
+            calculatorLayout.setPrefWidth(550);
+            calculatorLayout.setPrefHeight(775);
             calculatorLayout.setTop(hbox);
             // gör första inputen till textfielden som C så att den är tom
             hbox.getChildren().setAll(outputClass.textfieldOutput("C"));
@@ -62,10 +38,9 @@ public class CalculatorLayout extends Application {
 
             primaryStage.setTitle("Calculator");
             primaryStage.setScene(calculatorScene);
+            primaryStage.setResizable(false);
             primaryStage.show();
-
         }
-
     /**
      * Skapar numpaden
      * @return
@@ -77,6 +52,7 @@ public class CalculatorLayout extends Application {
         GridPane buttons = new GridPane();
         buttons.setHgap(10);
         buttons.setVgap(10);
+        // loopar igenom arraylisten med knappar
         for (int i = 0; i < numPad.size(); i++) {
 
             // var femte iteration byter den rad och nollställer columben till sin orginalplats
@@ -88,7 +64,6 @@ public class CalculatorLayout extends Application {
             buttons.add(numPad.get(i),columb,row);
             columb ++;
         }
-
         center.getChildren().add(buttons);
 
         return center;
@@ -99,14 +74,11 @@ public class CalculatorLayout extends Application {
      */
     public void buttonCreator() {
         CalculatorOutput outputClass = new CalculatorOutput();
-
-
+        // knapparna från höger till vänster
         char[] numPadChar = {'7', '8', '9','*','⌫','4','5','6','÷','%','1','2','3','-','√','.','0','=','+','π','(',')','C','D','t'};
         int count = 0;
 
         for (char t : numPadChar){
-
-
             char temporaryChar = numPadChar[count];
             System.out.println(temporaryChar);
             String temporaryString = String.valueOf(temporaryChar);
@@ -120,7 +92,5 @@ public class CalculatorLayout extends Application {
             numPad.add(temp);
             count++;
         }
-
-
     }
 }

@@ -1,10 +1,7 @@
 package Calculator;
 
-
-import java.util.ArrayList;
-
 public class CalculatorController {
-    // skapar en arraylist med klasserna
+    // skapar en array med klasserna
     static CalculatorInterfaceOperators operators[] = new CalculatorInterfaceOperators[999];
 
     public static void main(String[] args) {
@@ -28,14 +25,12 @@ public class CalculatorController {
     public double operatorController(char operator, double firstNumber, double secondNumber){
 
         // eftersom java inte acepterar √ som index så blir v de nya index
-        if(operator == '√')
+        if(operator == '√') {
             operator = 'v';
-
-    if(operator=='v')
-        return operators[operator].calculate(0.0,secondNumber);
+            return operators[operator].calculate(0.0,secondNumber);
+        }
     else
         return operators[operator].calculate(firstNumber,secondNumber);
-
     }
 
 
