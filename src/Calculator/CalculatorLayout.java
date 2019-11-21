@@ -1,4 +1,5 @@
 package Calculator;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -20,34 +21,37 @@ public class CalculatorLayout extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-        @Override
-        public void start (Stage primaryStage){
 
-            CalculatorOutput outputClass = new CalculatorOutput();
+    @Override
+    public void start(Stage primaryStage) {
 
-            buttonCreator();
+        CalculatorOutput outputClass = new CalculatorOutput();
 
-            calculatorLayout.setPrefWidth(550);
-            calculatorLayout.setPrefHeight(775);
-            calculatorLayout.setTop(hbox);
-            // gör första inputen till textfielden som C så att den är tom
-            hbox.getChildren().setAll(outputClass.textfieldOutput("C"));
-            calculatorLayout.setCenter(borderpaneCenter());
+        buttonCreator();
 
-            Scene calculatorScene = new Scene(calculatorLayout);
+        calculatorLayout.setPrefWidth(550);
+        calculatorLayout.setPrefHeight(665);
+        calculatorLayout.setTop(hbox);
+        // gör första inputen till textfielden som C så att den är tom
+        hbox.getChildren().setAll(outputClass.textfieldOutput("C"));
+        calculatorLayout.setCenter(borderpaneCenter());
 
-            primaryStage.setTitle("Calculator");
-            primaryStage.setScene(calculatorScene);
-            primaryStage.setResizable(false);
-            primaryStage.show();
-        }
+        Scene calculatorScene = new Scene(calculatorLayout);
+
+        primaryStage.setTitle("Calculator");
+        primaryStage.setScene(calculatorScene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
+    }
+
     /**
      * Skapar numpaden
+     *
      * @return
      */
-    public StackPane borderpaneCenter(){
+    public StackPane borderpaneCenter() {
         int row = 1;
-        int columb= 1;
+        int columb = 1;
         StackPane center = new StackPane();
         GridPane buttons = new GridPane();
         buttons.setHgap(10);
@@ -56,13 +60,13 @@ public class CalculatorLayout extends Application {
         for (int i = 0; i < numPad.size(); i++) {
 
             // var femte iteration byter den rad och nollställer columben till sin orginalplats
-            if (i % 5 ==0) {
+            if (i % 5 == 0) {
                 row++;
                 columb = 1;
             }
 
-            buttons.add(numPad.get(i),columb,row);
-            columb ++;
+            buttons.add(numPad.get(i), columb, row);
+            columb++;
         }
         center.getChildren().add(buttons);
 
@@ -74,19 +78,20 @@ public class CalculatorLayout extends Application {
      */
     public void buttonCreator() {
         CalculatorOutput outputClass = new CalculatorOutput();
-        // knapparna från höger till vänster
-        char[] numPadChar = {'7', '8', '9','*','⌫','4','5','6','÷','%','1','2','3','-','√','.','0','=','+','π','(',')','C','D','t'};
+        // knapparna från vänster till höger
+        char[] numPadChar = {'7', '8', '9', '*', '⌫', '4', '5', '6', '÷', '%', '1', '2', '3', '-', '√', '.', '0', '=', '+', 'C'};
         int count = 0;
 
-        for (char t : numPadChar){
+        for (char t : numPadChar) {
             char temporaryChar = numPadChar[count];
-            System.out.println(temporaryChar);
             String temporaryString = String.valueOf(temporaryChar);
             Button temp = new Button(temporaryString);
             temp.setStyle("-fx-font: 24 arial;");
 
             // Vid ett knapptryck så anropas texfieldOutput metoden för att avgöra vad som ska visas i hboxen
-            temp.setOnAction(event -> { hbox.getChildren().setAll(outputClass.textfieldOutput(temporaryString)); });
+            temp.setOnAction(event -> {
+                hbox.getChildren().setAll(outputClass.textfieldOutput(temporaryString));
+            });
             temp.setPrefWidth(100);
             temp.setPrefHeight(100);
             numPad.add(temp);

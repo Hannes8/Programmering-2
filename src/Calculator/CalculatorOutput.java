@@ -1,4 +1,5 @@
 package Calculator;
+
 import javafx.scene.control.TextField;
 
 public class CalculatorOutput {
@@ -10,30 +11,31 @@ public class CalculatorOutput {
      * @param input
      * @return
      */
-    public TextField textfieldOutput(String input){
+    public TextField textfieldOutput(String input) {
 
-    currentNumbers = inputEditor(input);
+        currentNumbers = inputEditor(input);
 
-    TextField textfieldOutput = textFieldCreator(currentNumbers);
+        TextField textfieldOutput = textFieldCreator(currentNumbers);
 
-    return textfieldOutput;
+        return textfieldOutput;
 
     }
 
     /**
      * Tar in en string och skapar ett texfield med olika attribut
+     *
      * @param input
      * @return Textfield
      */
-    public TextField textFieldCreator(String input){
+    public TextField textFieldCreator(String input) {
         // ger textfielden sina attribut
         TextField textfieldOutput = new TextField(input);
-        textfieldOutput.setStyle(("-fx-font: 50 arial;"));
+        textfieldOutput.setStyle("-fx-font: 50 arial;");
         textfieldOutput.setEditable(false);
         textfieldOutput.setPrefWidth(800.0);
         textfieldOutput.setPrefHeight(200.0);
-        // om inputen är längre eller lika med 20 så blir font storleken mindre
-        if(input.length() >= 20){
+        // om inputen är längre eller lika med 17 så blir font storleken mindre
+        if (input.length() >= 17) {
             textfieldOutput.setStyle("-fx-font: 30 arial;");
         }
         return textfieldOutput;
@@ -41,14 +43,15 @@ public class CalculatorOutput {
 
     /**
      * Tar in en string och returnerar den utan det sista tecknet
+     *
      * @param input
      * @return
      */
-    public String deleteLastNumber(String input){
+    public String deleteLastNumber(String input) {
         StringBuilder backspace = new StringBuilder(input);
-        backspace.deleteCharAt(input.length()-1);
-        if(input.contains("⌫"))
-        backspace.deleteCharAt(input.length()-2);
+        backspace.deleteCharAt(input.length() - 1);
+        if (input.contains("⌫"))
+            backspace.deleteCharAt(input.length() - 2);
         input = backspace.toString();
 
         return input;
@@ -56,47 +59,46 @@ public class CalculatorOutput {
 
     /**
      * Hanterar inputen
+     *
      * @param input
      * @return
      */
-    public String inputEditor(String input){
+    public String inputEditor(String input) {
 
         currentNumbers += input;
 
-        if(input.charAt(0)=='π'){
-            currentNumbers=deleteLastNumber(currentNumbers);
-            currentNumbers+="3.14";
-        }
-
-            // om inputen inte är en siffra eller - , √
-        if(Character.isDigit(input.charAt(0))==false && currentNumbers.length()==1 && !input.contains("-")&& !input.contains("√")){
+        // om inputen inte är en siffra eller - , √
+        if (Character.isDigit(input.charAt(0)) == false && currentNumbers.length() == 1 && !input.contains("-") && !input.contains("√")) {
             currentNumbers = "";
-            System.out.println("Invalid Input");
 
         }
-        if(input.equals("⌫")) {
-            if (currentNumbers.length()==0)
+        if (input.equals("⌫")) {
+            if (currentNumbers.length() == 0)
                 currentNumbers = "";
             else
-            currentNumbers = deleteLastNumber(currentNumbers);
+                currentNumbers = deleteLastNumber(currentNumbers);
 
         }
-        if(currentNumbers.length()>= 2) {
-            System.out.println(currentNumbers.charAt(currentNumbers.length() - 2));
+        if (currentNumbers.length() >= 2) {
             // om inputen och det sista tecknet i currentNumbers är räknesätt, gäller ej -
-            if(Character.isDigit(input.charAt(0)) == false && Character.isDigit(currentNumbers.charAt(currentNumbers.length()-2)) == false && !input.contains("-") && !input.contains("√")){
+            if (Character.isDigit(input.charAt(0)) == false && Character.isDigit(currentNumbers.charAt(currentNumbers.length() - 2)) == false && !input.contains("-") && !input.contains("√")) {
                 currentNumbers = deleteLastNumber(currentNumbers);
             }
         }
 
-        if(input.equals("=")){
-            currentNumbers = calculations.result(currentNumbers);
+        if (input.equals("=")) {
 
-            if (currentNumbers.contains("="))
+            try {
                 currentNumbers = deleteLastNumber(currentNumbers);
+                currentNumbers = calculations.result(currentNumbers);
+            }
+            catch (Exception e){
+                System.out.println("ERROR");
+            }
+
         }
 
-        if(input.equals("C"))
+        if (input.equals("C"))
             currentNumbers = "";
 
         return currentNumbers;
